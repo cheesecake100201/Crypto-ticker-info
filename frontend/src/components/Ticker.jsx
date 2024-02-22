@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import Data from "./Data";
-
 const Ticker = () => {
   const [input, setInput] = useState();
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -18,12 +17,12 @@ const Ticker = () => {
     let newQuotes = {};
     try {
       const response = await fetch(
-        `http://localhost:8000/metadata?slug=${input}`,
+        `https://crypto-ticker-info.onrender.com/metadata?slug=${input}`,
         {
           method: "GET",
           headers: {
             Accept: "application/json",
-            "X-CMC_PRO_API_KEY": "5bce303c-9458-438f-87c3-407ac14694f8",
+            "X-CMC_PRO_API_KEY": import.meta.env.API_KEY,
           },
         }
       );
@@ -43,12 +42,12 @@ const Ticker = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/latestQuotes?slug=${input}`,
+        `https://crypto-ticker-info.onrender.com/latestQuotes?slug=${input}`,
         {
           method: "GET",
           headers: {
             Accept: "application/json",
-            "X-CMC_PRO_API_KEY": "5bce303c-9458-438f-87c3-407ac14694f8",
+            "X-CMC_PRO_API_KEY": import.meta.env.API_KEY,
           },
         }
       );
@@ -67,7 +66,7 @@ const Ticker = () => {
     } catch (error) {}
 
     setFormSubmitted(true);
-    console.log(formSubmitted)
+    console.log(formSubmitted);
   };
 
   return (
