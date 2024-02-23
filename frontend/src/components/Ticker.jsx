@@ -17,7 +17,7 @@ const Ticker = () => {
     let newQuotes = {};
     try {
       const response = await fetch(
-        `https://crypto-ticker-info.onrender.com/metadata?slug=${input}`,
+        `http://localhost:8000/metadata?symbol=${input}`,
         {
           method: "GET",
           headers: {
@@ -42,7 +42,7 @@ const Ticker = () => {
 
     try {
       const response = await fetch(
-        `https://crypto-ticker-info.onrender.com/latestQuotes?slug=${input}`,
+        `http://localhost:8000/latestQuotes?symbol=${input}`,
         {
           method: "GET",
           headers: {
@@ -53,12 +53,13 @@ const Ticker = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        newQuotes["Circulating Supply"] = data["data"]["circulating_supply"];
-        newQuotes["Current Price"] = data["data"]["quote"]["USD"]["price"];
-        newQuotes["Market Cap"] = data["data"]["quote"]["USD"]["market_cap"];
-        newQuotes["24 Hr Volume"] = data["data"]["quote"]["USD"]["volume_24h"];
+        newQuotes["Circulating Supply"] = data["data"][0]["circulating_supply"];
+        newQuotes["Current Price"] = data["data"][0]["quote"]["USD"]["price"];
+        newQuotes["Market Cap"] = data["data"][0]["quote"]["USD"]["market_cap"];
+        newQuotes["24 Hr Volume"] = data["data"][0]["quote"]["USD"]["volume_24h"];
         newQuotes["24 Hr Volume Change"] =
-          data["data"]["quote"]["USD"]["volume_change_24h"];
+          data["data"][0]["quote"]["USD"]["volume_change_24h"];
+        console.log(newQuotes)
         setQuotes(newQuotes);
       } else {
         console.error(`Error fetching latest quotes: ${response.status}`);
@@ -89,7 +90,7 @@ const Ticker = () => {
             <input
               type="text"
               className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-              placeholder="Enter cryptocurrency..."
+              placeholder="Enter crypto symbol"
               onChange={handleChange}
             />
             <button
