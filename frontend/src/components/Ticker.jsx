@@ -17,7 +17,7 @@ const Ticker = () => {
     let newQuotes = {};
     try {
       const response = await fetch(
-        `http://localhost:8000/metadata?symbol=${input}`,
+        `https://crypto-ticker-info.onrender.com/metadata?symbol=${input}`,
         {
           method: "GET",
           headers: {
@@ -42,7 +42,7 @@ const Ticker = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/latestQuotes?symbol=${input}`,
+        `https://crypto-ticker-info.onrender.com/latestQuotes?symbol=${input}`,
         {
           method: "GET",
           headers: {
